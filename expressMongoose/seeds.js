@@ -18,3 +18,6 @@ const p = new Product({
 p.save().then(p => {
     console.log(p)
 })
+    .catch(e => {
+        console.log(e)
+    })

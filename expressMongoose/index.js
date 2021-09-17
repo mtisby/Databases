@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose"
-import Product from './models/product';
+import {Product} from './models/product.js';
 
 mongoose.connect('mongodb://localhost:27017/farmStand')
     .then(() => {
