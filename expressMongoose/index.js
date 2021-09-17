@@ -15,10 +15,20 @@ const port = 3000;
 
 app.set('view engine', 'ejs');
 
+// use async and await here because 
+// we are requesting data from our database
+// and we can run our code and 
+// wait for our request to be resolved
 app.get('/products', async (req, res) => {
     const products = await Product.find({})
-    console.log(products)
-    res.send("all products will be here")
+    res.render('./products/index.ejs', {products})
+})
+
+app.get('/products/:id', async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    console.log(product._id)
+    res.render('./products/show.ejs', {product})
 })
 
 app.listen(port, () => {

@@ -1,13 +1,15 @@
-import {Product} from './models/product.js';
 import mongoose from "mongoose"
+import { Product } from './models/product.js';
 
 mongoose.connect('mongodb://localhost:27017/farmStand')
-    .then(() => {
-        console.log("mongo connected")
-    })
-    .catch(err => {
-        console.log("mongo connection error")
-    })
+.then(() => {
+    console.log("MONGO CONNECTION OPEN!!!")
+})
+.catch(err => {
+    console.log("OH NO MONGO CONNECTION ERROR!!!!")
+    console.log(err)
+})
+
 
 const seedProducts = [
     {
