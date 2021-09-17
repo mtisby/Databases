@@ -14,6 +14,7 @@ const app = express();
 const port = 3000;
 
 app.set('view engine', 'ejs');
+app.use(express.urlencoded({extended: true}))
 
 // use async and await here because 
 // we are requesting data from our database
@@ -23,6 +24,15 @@ app.get('/products', async (req, res) => {
     const products = await Product.find({})
     res.render('./products/index.ejs', {products})
 })
+
+app.get('/products/new', (req, res) => {
+    res.render('./products/new')
+})
+
+app.post('/products', (req, res) => {
+    console.log(req.body);
+    res.send("making ur product")
+ })
 
 app.get('/products/:id', async (req, res) => {
     const { id } = req.params;
