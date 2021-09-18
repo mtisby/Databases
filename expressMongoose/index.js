@@ -42,6 +42,12 @@ app.get('/products/:id', async (req, res) => {
     res.render('./products/show.ejs', {product})
 })
 
+app.get('./products/:id/edit', (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    res.render('./products/edit.ejs', {products})
+})
+
 app.listen(port, () => {
     console.log(`listening on ${port}`)
 })
