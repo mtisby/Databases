@@ -16,6 +16,7 @@ const app = express();
 const port = 3000;
 
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended: true}))
 
 // use async and await here because 
@@ -44,10 +45,22 @@ app.get('/products/:id', async (req, res) => {
     res.render('./products/show.ejs', {product})
 })
 
-app.get('./products/:id/edit', (req, res) => {
+app.get('/products/:id/edit', async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
-    res.render('./products/edit.ejs', {products})
+    res.render('./products/edit.ejs', {product})
+})
+
+app.put('/products/:id/edit', async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true})
+    res.redirect(`./products/${product._id}`)
+})
+
+app.put('/products/:id', async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+    res.redirect(`/products/${product._id}`);
 })
 
 app.listen(port, () => {
