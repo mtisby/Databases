@@ -14,6 +14,7 @@ mongoose.connect('mongodb://localhost:27017/farmStand')
 
 const app = express();
 const port = 3000;
+const categories = ['fruit', 'vegetable', 'dairy'];
 
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'))
@@ -61,6 +62,11 @@ app.put('/products/:id', async (req, res) => {
     const { id } = req.params;
     const product = await Product.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
     res.redirect(`/products/${product._id}`);
+})
+
+app.delete('/products/:id', async (req, res) => {
+    const { id } = req.params;
+    const deletedProduct = await Product.findByIdAndDelete(id);
 })
 
 app.listen(port, () => {
