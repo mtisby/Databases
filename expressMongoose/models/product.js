@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+const { Schema } = mongoose;
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -13,6 +14,10 @@ const productSchema = new mongoose.Schema({
     category: {
         type: String,
         enum: ['fruit', 'vegetable', 'dairy']
+    },
+    farm: {
+        type: Schema.Types.ObjectId,
+        ref: 'Farm'
     }
 })
     

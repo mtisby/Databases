@@ -12,5 +12,16 @@ const farmSchema = new Schema({
     email: {
         type: String,
         required: [true, "Email required"]
-    }
+    },
+    products: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Product'
+        }
+    ]
 })
+
+
+const Farm = mongoose.model('Farm', farmSchema);
+
+export { Farm }
