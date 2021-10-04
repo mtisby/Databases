@@ -1,10 +1,9 @@
 import express from "express"
 import mongoose from "mongoose"
 import { Product } from './models/product.js';
+import { Farm } from './models/farm.js';
 import methodOverride from "method-override"
 
-const Product = require('./models/product');
-const Farm = require('./models/farm')
 const categories = ['fruit', 'vegetable', 'dairy'];
 
 
