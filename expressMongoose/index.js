@@ -20,6 +20,12 @@ app.set('view engine', 'ejs');
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended: true}))
 
+// farm routes
+app.get('/farms/new', (req, res) => {
+    res.render('farms/new')
+})
+
+
 // use async and await here because 
 // we are requesting data from our database
 // and we can run our code and 
