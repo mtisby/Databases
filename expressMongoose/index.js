@@ -73,44 +73,45 @@ app.post('/farms/:id/products', async (req, res) => {
 // we are requesting data from our database
 // and we can run our code and 
 // wait for our request to be resolved
+// PRODUCT ROUTES
+
 app.get('/products', async (req, res) => {
-    const products = await Product.find({})
-    res.render('./products/index.ejs', {products})
+    const { category } = req.query;
+    if (category) {
+        const products = await Product.find({ category })
+        res.render('products/index', { products, category })
+    } else {
+        const products = await Product.find({})
+        res.render('products/index', { products, category: 'All' })
+    }
 })
 
 app.get('/products/new', (req, res) => {
-    res.render('./products/new')
+    res.render('products/new', { categories })
 })
 
 app.post('/products', async (req, res) => {
-    const newProduct = new Product(req.body)
-    await newProduct.save()
-    res.redirect(`./products/${newProduct._id}`)
- })
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.redirect(`/products/${newProduct._id}`)
+})
 
 app.get('/products/:id', async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id);
-    console.log(product._id)
-    res.render('./products/show.ejs', {product})
+    const product = await Product.findById(id).populate('farm', 'name');
+    res.render('products/show', { product })
 })
 
 app.get('/products/:id/edit', async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
-    res.render('./products/edit.ejs', {product, categories})
-})
-
-app.put('/products/:id/edit', async (req, res) => {
-    const { id } = req.params;
-    const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true})
-    res.redirect(`./products/${product._id}`)
+    res.render('products/edit', { product, categories })
 })
 
 app.put('/products/:id', async (req, res) => {
     const { id } = req.params;
     const product = await Product.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
-    res.redirect(`./products/${product._id}`);
+    res.redirect(`/products/${product._id}`);
 })
 
 app.delete('/products/:id', async (req, res) => {
@@ -119,6 +120,11 @@ app.delete('/products/:id', async (req, res) => {
     res.redirect('/products');
 })
 
-app.listen(port, () => {
-    console.log(`listening on ${port}`)
+
+
+app.listen(3000, () => {
+    console.log("APP IS LISTENING ON PORT 3000!")
 })
+
+
+
